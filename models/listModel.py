@@ -16,6 +16,7 @@ class ListModel(database.Model):
     def json(self):
         return {
         "id": self.id,
+        "status": self.status,
         "name": self.name,
         "user_id": self.user_id,
         "items_quantity": len(self.items),

@@ -5,13 +5,13 @@ cursor = connection.cursor()
 
 # "\" serve para ele reconhecer que a proxima linha faz parte da string
 createItemTable = "CREATE TABLE IF NOT EXISTS \
-items (id integer PRIMARY KEY AUTOINCREMENT, name text, type text, status boolean, flavor text, list_id integer, FOREIGN KEY(list_id) REFERENCES lists(id))"
+items (id integer PRIMARY KEY AUTOINCREMENT, name text, type text, done integer default 0, flavor text, list_id integer, FOREIGN KEY(list_id) REFERENCES lists(id))"
 
 createUserTable = "CREATE TABLE IF NOT EXISTS \
 users (id integer PRIMARY KEY AUTOINCREMENT, name text, username text, password text)"
 
 createListTable = "CREATE TABLE IF NOT EXISTS \
-lists (id integer PRIMARY KEY AUTOINCREMENT, name text, status boolean, user_id integer, FOREIGN KEY(user_id) REFERENCES users(id))"
+lists (id integer PRIMARY KEY AUTOINCREMENT, name text, is_notebook integer default 0, user_id integer, FOREIGN KEY(user_id) REFERENCES users(id))"
 
 
 cursor.execute(createUserTable)#Cria a tabela
