@@ -1,4 +1,5 @@
 from sql_alchemy import database
+from models.userModel import UserModel
 
 class ListModel(database.Model):
     __tablename__ = "lists"
@@ -40,8 +41,7 @@ class ListModel(database.Model):
 
     #Salva o item no database
     def save(self):
-
-        if not UserModel.findById(data["user_id"]):
+        if not UserModel.findById(self.user_id):
             return { "message": "The associated user doesn't exists" }, 400
 
         database.session.add(self)

@@ -43,7 +43,7 @@ class ItemModel(database.Model):
     #Salva o item no banco
     def save(self):
 
-        if not ListModel.findById(data["list_id"]):
+        if not ListModel.findById(self.list_id):
             return { "message": "The associated list doesn't exists" }, 400
 
         database.session.add(self)
@@ -52,10 +52,11 @@ class ItemModel(database.Model):
 
 
     #Atualiza o item no banco
-    def update(self,name,type,flavor):
+    def update(self, name, type, flavor, status):
         self.name = name
         self.type = type
         self.flavor = flavor
+        self.status = status
         ItemModel.save(self)
 
     #Deleta um item no banco

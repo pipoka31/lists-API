@@ -5,7 +5,7 @@ cursor = connection.cursor()
 
 # "\" serve para ele reconhecer que a proxima linha faz parte da string
 createItemTable = "CREATE TABLE IF NOT EXISTS \
-items (id integer PRIMARY KEY AUTOINCREMENT, name text, type text, flavor text, list_id integer, FOREIGN KEY(list_id) REFERENCES lists(id))"
+items (id integer PRIMARY KEY AUTOINCREMENT, name text, type text, status boolean, flavor text, list_id integer, FOREIGN KEY(list_id) REFERENCES lists(id))"
 
 createUserTable = "CREATE TABLE IF NOT EXISTS \
 users (id integer PRIMARY KEY AUTOINCREMENT, name text, username text, password text)"
