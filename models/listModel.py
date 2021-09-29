@@ -6,6 +6,7 @@ class ListModel(database.Model):
 
     id = database.Column(database.Integer(), primary_key = True)
     name = database.Column(database.String())
+    is_notebook = database.Column(database.Integer(), default=0)
     user_id = database.Column(database.Integer(), database.ForeignKey("users.id"))
     items = database.relationship("ItemModel")#Lista de "items"
 
@@ -14,9 +15,12 @@ class ListModel(database.Model):
         self.user_id = user_id
 
     def json(self):
+        notebook = False
+        if self.is_notebook == 1:
+            notebook = True
         return {
         "id": self.id,
-        "status": self.status,
+        "is_notebook": notebook,
         "name": self.name,
         "user_id": self.user_id,
         "items_quantity": len(self.items),

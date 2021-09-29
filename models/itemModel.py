@@ -12,6 +12,7 @@ class ItemModel(database.Model):
     name = database.Column(database.String(100))
     type = database.Column(database.String(100))
     flavor = database.Column(database.String(100))
+    done = database.Column(database.Integer(),default=0)
     list_id = database.Column(database.Integer(), database.ForeignKey("lists.id"))
 
 
@@ -23,8 +24,12 @@ class ItemModel(database.Model):
 
 
     def json(self):
+        done = False
+        if self.done == 1:
+            done = True
         return {
         "id": self.id,
+        "done": done,
         "name": self.name,
         "type": self.type,
         "flavor": self.flavor,
