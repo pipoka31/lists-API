@@ -57,11 +57,12 @@ class ItemModel(database.Model):
 
 
     #Atualiza o item no banco
-    def update(self, name, type, flavor, status):
+    def update(self, name, type, flavor, list_id, done):
+        print(name, type, flavor, list_id, done)
         self.name = name
         self.type = type
         self.flavor = flavor
-        self.status = status
+        self.done = done
         ItemModel.save(self)
 
     #Deleta um item no banco

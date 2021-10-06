@@ -29,7 +29,7 @@ jwt = JWTManager(app)  # Integra o JWT ao app
 
 #Routes
 
-api.add_resource(MarketItem, "/additem")
+api.add_resource(MarketItem, "/item")
 api.add_resource(MarketList, "/allitems")  # Mostra todos os itens
 
 api.add_resource(User, "/user")

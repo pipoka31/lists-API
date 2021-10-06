@@ -53,6 +53,8 @@ class MarketItem(Resource):
     arguments.add_argument("type",type=str,required=True,help="'type' field can't be blank")
     arguments.add_argument("flavor")
     arguments.add_argument("list_id",type=str,required=True,help="'list_id' field can't be blank")
+    arguments.add_argument("item_id", type=int)
+    arguments.add_argument("done", type=int)
 
 
     #METODO GET = obtem os dados
@@ -61,13 +63,13 @@ class MarketItem(Resource):
         if item:
             return item.json(), 200
         else:
-            return {"message":"item not found"}
+            return {"message":"item not found"}, 500
 
     @jwt_required()
     #METODO POST = adiciona um dado
     def post(self):
         data = MarketItem.arguments.parse_args()
-        newItem = ItemModel(**data)
+        newItem = ItemModel(data["name"], data["type"],data["flavor"], data["list_id"])
         #Tratamento de excecoes
         try:
             newItem.save()
@@ -78,20 +80,20 @@ class MarketItem(Resource):
 
     @jwt_required()
     #METODO PUT = atualiza um dado
-    def put(self, item_id):
-        item = ItemModel.findById(item_id)
+    def put(self):
         data = MarketItem.arguments.parse_args()
+        item = ItemModel.findById(data["item_id"])
 
         if item:
             #Tratamento de excecoes
             try:
-                item.update(**data)
+                item.update(data["name"], data["type"],data["flavor"], data["list_id"], data["done"])
                 return {"message": "Updated successfully!", "item": item.json()}, 200
             except Exception as e:
                 return {"message": "'{}'".format(e), "item": item.json()}, 500
 
         else:
-            newItem = ItemModel(item_id,**data)
+            newItem = ItemModel(data["name"], data["type"],data["flavor"], data["list_id"])
             try:
                 ItemModel.save(newItem)
                 return {"message": "Created successfully!", "items": newItem.json()}, 201
@@ -101,8 +103,9 @@ class MarketItem(Resource):
 
     @jwt_required()
     #METODO DELETE = deleta um dado
-    def delete(self, item_id):
-        item = ItemModel.findById(item_id)
+    def delete(self):
+        data = MarketItem.arguments.parse_args()
+        item = ItemModel.findById(data["item_id"])
         if item:
             #Tratamento de excecoes
             try:
