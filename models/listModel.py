@@ -7,11 +7,15 @@ class ListModel(database.Model):
     id = database.Column(database.Integer(), primary_key = True)
     name = database.Column(database.String())
     is_notebook = database.Column(database.Integer(), default=0)
+    color = database.Column(database.String())
     user_id = database.Column(database.Integer(), database.ForeignKey("users.id"))
+    favorite = database.Column(database.Integer(), default=0)
     items = database.relationship("ItemModel")#Lista de "items"
 
-    def __init__(self,id,name,user_id):
+    def __init__(self,id,name,user_id, is_notebook, color):
         self.name = name
+        self.is_notebook = is_notebook
+        self.color = color
         self.user_id = user_id
 
     def json(self):
@@ -20,7 +24,9 @@ class ListModel(database.Model):
             notebook = True
         return {
         "id": self.id,
-        "is_notebook": notebook,
+        "is_notebook": self.is_notebook,
+        "color": self.color,
+        "favorite": self.favorite,
         "name": self.name,
         "user_id": self.user_id,
         "items_quantity": len(self.items),

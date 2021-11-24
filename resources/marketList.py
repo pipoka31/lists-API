@@ -83,7 +83,8 @@ class MarketItem(Resource):
     def put(self):
         data = MarketItem.arguments.parse_args()
         item = ItemModel.findById(data["item_id"])
-
+        print(data)
+        print(item)
         if item:
             #Tratamento de excecoes
             try:

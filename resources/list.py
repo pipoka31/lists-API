@@ -19,6 +19,8 @@ class List(Resource):
     arguments.add_argument("id")
     arguments.add_argument("name",type=str,required=True,help="'name' field can't be blank")
     arguments.add_argument("user_id",required=True,help="'user_id' field can't be blank")
+    arguments.add_argument("is_notebook",required=True,help="'is_notebook' field can't be blank")
+    arguments.add_argument("color",required=True,help="'color' field can't be blank")
 
     @jwt_required()
     def get(self):

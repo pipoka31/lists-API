@@ -11,7 +11,7 @@ createUserTable = "CREATE TABLE IF NOT EXISTS \
 users (id integer PRIMARY KEY AUTOINCREMENT, name text, username text, password text)"
 
 createListTable = "CREATE TABLE IF NOT EXISTS \
-lists (id integer PRIMARY KEY AUTOINCREMENT, name text, is_notebook integer default 0, user_id integer, FOREIGN KEY(user_id) REFERENCES users(id))"
+lists (id integer PRIMARY KEY AUTOINCREMENT, name text, is_notebook integer default 0, favorite integer default 0, user_id integer, FOREIGN KEY(user_id) REFERENCES users(id))"
 
 
 cursor.execute(createUserTable)#Cria a tabela
