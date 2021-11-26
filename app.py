@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 from flask_restful import Api
 from resources.marketList import MarketItem, MarketList
-from resources.user import User, UserList, UserLogin, UserLogout
+from resources.user import User, UserList, UserLogin, UserLogout, RecaptchaCheck
 from resources.list import Lists, List
 from flask_jwt_extended import JWTManager
 from blacklist import BLACKLIST
@@ -36,6 +36,7 @@ api.add_resource(User, "/user")
 api.add_resource(UserList, "/userlist")  # Mostra todos os itens
 api.add_resource(UserLogin, "/login")
 api.add_resource(UserLogout, "/logout")
+api.add_resource(RecaptchaCheck, "/recaptchacheck")
 
 api.add_resource(Lists, "/lists/<int:user_id>")
 api.add_resource(List, "/list")
