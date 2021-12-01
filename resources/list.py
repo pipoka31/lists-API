@@ -19,6 +19,8 @@ class List(Resource):
     arguments.add_argument("id")
     arguments.add_argument("name",type=str,required=True,help="'name' field can't be blank")
     arguments.add_argument("user_id",required=True,help="'user_id' field can't be blank")
+    arguments.add_argument("is_notebook",required=True,help="'is_notebook' field can't be blank")
+    arguments.add_argument("color",required=True,help="'color' field can't be blank")
 
     @jwt_required()
     def get(self):
@@ -56,8 +58,9 @@ class List(Resource):
                 return { "message": e }, 400
 
     @jwt_required()
-    def delete(self, id):
-        list = ListModel.findById(id)
+    def delete(self):
+        data = List.arguments.parse_args()
+        list = ListModel.findById(data["id"])
         if list:
             try:
                 list.delete()

@@ -1,9 +1,10 @@
 from flask_restful import Resource, reqparse
 from models.userModel import UserModel
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt
+import json
 from werkzeug.security import safe_str_cmp
 from blacklist import BLACKLIST
-
+import requests
 
 class User(Resource):
 
@@ -110,6 +111,19 @@ class UserLogin(Resource):
             return {"token": accessToken, "user": user.json()}, 200
         else:
             return {"message": "Error! Please, verify your login informations."}, 400
+
+class RecaptchaCheck(Resource):
+    arguments = reqparse.RequestParser()
+    arguments.add_argument("token")
+
+    @classmethod
+    def post(self):
+        data = RecaptchaCheck.arguments.parse_args()
+        secret = "6LetpVsdAAAAALrG3bs0zKO9ZDwq1nLi1JZLQnRe"
+
+        response = requests.request("GET", "https://www.google.com/recaptcha/api/siteverify?secret=" + secret + "&response=" + data["token"])
+        response.json()
+        return response.json(), 200
 
 
 class UserLogout(Resource):
