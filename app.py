@@ -6,10 +6,9 @@ from resources.list import Lists, List
 from flask_jwt_extended import JWTManager
 from blacklist import BLACKLIST
 from flask_cors import CORS
+from datetime import timedelta
 
 #Gera a chave secreta do app
-
-
 def key():
     list = ""
     for number in range(0, 100, 2):
@@ -24,6 +23,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Database.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = key()
 app.config["JWT_BLACKLIST_ENABLED"] = True
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=168)
 api = Api(app)
 jwt = JWTManager(app)  # Integra o JWT ao app
 
@@ -47,8 +47,6 @@ def createDatabase():
     database.create_all()
 
 #Verifica se o token esta na Blacklist
-
-
 @jwt.token_in_blocklist_loader
 def verifyBlacklist(self, token):
     return token["jti"] in BLACKLIST

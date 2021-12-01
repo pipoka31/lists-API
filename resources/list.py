@@ -58,8 +58,9 @@ class List(Resource):
                 return { "message": e }, 400
 
     @jwt_required()
-    def delete(self, id):
-        list = ListModel.findById(id)
+    def delete(self):
+        data = List.arguments.parse_args()
+        list = ListModel.findById(data["id"])
         if list:
             try:
                 list.delete()
